@@ -10,13 +10,16 @@
   </head>
   <body onload="generateGame(5,5,5)">
     <h1>Let's play</h1>
-    <p id="controls">
+    <div id="controls">
         <label for="rows">Rows</label><input id="rows" type="number"/>
         <label for="cols">Columns</label><input id="cols" type="number"/>
         <label for="bombs">Bombs</label><input id="bombs" type="number"/>
         <input type="button" value="Generate" onclick="generateNewGame()"/>
         <span id="message"/>
-    </p>
-    <p id="grid"></p>
+    </div>
+    <div id="stats"></div>
+        <span id="bombsLeft"></span>
+        <span id="message"></span>
+    <div id="grid"></div>
   </body>
 </html>

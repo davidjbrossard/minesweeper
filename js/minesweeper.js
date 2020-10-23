@@ -1,4 +1,6 @@
 var map = [[]];
+var bombsLeft = 0;
+var revealed = 0;
 
 function generateGrid(width, height){
     var table = '<table>';
@@ -20,11 +22,14 @@ function mark(colIndex, rowIndex){
         $("#"+rowIndex+colIndex).html('x');            
     } else {
         $("#"+rowIndex+colIndex).addClass('suspectedBomb');
-        $("#"+rowIndex+colIndex).html('');            
+        $("#"+rowIndex+colIndex).html('');
+        bombsLeft--;            
+        $("#bombsLeft").html('Bombs left: '+bombsLeft);
     }
 }
 
 function placeBombs(quantity, width, height){
+    bombsLeft = quantity;
     for (var i = 0 ; i < quantity; i++){
         var rowIndex = Math.floor(Math.random()*width);
         var colIndex = Math.floor(Math.random()*height);
@@ -64,6 +69,12 @@ function reveal(colIndex, rowIndex, height, width){
     } else {
         $("#"+rowIndex+colIndex).html(map[colIndex][rowIndex]);
         $("#"+rowIndex+colIndex).addClass('b'+map[colIndex][rowIndex]);
+        revealed++;
+    }
+    if (height*width==revealed){
+        $('#message').html('All done');
+    } else {
+        $('#message').html(height*width-revealed+' left...');
     }
 }
 
@@ -72,6 +83,7 @@ function revealNeighbor(colIndex,rowIndex, height, width){
         if (map[colIndex][rowIndex]!='REVEALED'){
             $("#"+rowIndex+colIndex).html(map[colIndex][rowIndex]);
             $("#"+rowIndex+colIndex).addClass('zero');
+            revealed++;
         }
         map[colIndex][rowIndex]='REVEALED';
         for (var i = -1; i < 2; i++){
